@@ -4,6 +4,8 @@
 
 This is a simple assessment project for a Shopping Cart application.
 
+More Details: (https://contingenton.github.io/tech-interview/shopping-cart-problem.html)[https://contingenton.github.io/tech-interview/shopping-cart-problem.html]
+
 ## How to Run
 
 To run the app and tests, simply use the provided `run.sh` script from your terminal:
