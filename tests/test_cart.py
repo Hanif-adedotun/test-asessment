@@ -84,3 +84,46 @@ def test_add_large_quantity():
     assert len(items) == 1
     assert items[0]['quantity'] == 1000000
     assert cart.get_total_sum() == 1250000.0
+
+def test_sales_tax_calculation():
+    cart = ShoppingCart(sales_tax=10)  # 10% sales tax
+    prod1 = Product(name="Perfume", price=50.00)
+    prod2 = Product(name="Body Wash", price=25.00)
+
+    cart.add_item(prod1, quantity=2)  # 2 * 50 = 100
+    cart.add_item(prod2, quantity=1)  # 1 * 25 = 25
+
+    # Subtotal: 125, Sales tax: 12.5, Total: 137.5
+    assert cart.get_total_sales_tax() == 12.5
+    assert cart.get_total_sum() == 137.5
+
+    # Ensure tax_amount fields are set and correct
+    for item in cart.get_items():
+        if item['name'] == "Perfume":
+            assert item['tax_amount'] == 10.0  # 100 * 0.1
+        elif item['name'] == "Body Wash":
+            assert item['tax_amount'] == 2.5  # 25 * 0.1
+
+def test_sales_tax_with_zero_tax():
+    cart = ShoppingCart(sales_tax=0)
+    prod = Product(name="Shampoo", price=30.0)
+    cart.add_item(prod, quantity=3)
+
+    assert cart.get_total_sales_tax() == 0.0
+    assert cart.get_total_sum() == 90.0
+
+def test_sales_tax_rounding():
+    cart = ShoppingCart(sales_tax=7.25)
+    prod = Product(name="Conditioner", price=19.99)
+    
+    cart.add_item(prod, quantity=3)
+    expected_tax = round(59.97 * 0.0725, 2)
+    
+    assert cart.get_total_sales_tax() == expected_tax
+
+def test_sales_tax_on_empty_cart():
+    cart = ShoppingCart(sales_tax=20)
+    
+    assert cart.get_total_sales_tax() == 0.0
+    assert cart.get_total_sum() == 0.0
+

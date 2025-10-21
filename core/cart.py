@@ -2,11 +2,12 @@ from core.product import Product
 from utils.util import round_value
 
 class ShoppingCart:
-     def __init__(self):
+     def __init__(self, sales_tax: float = 0):
           """
           Initialize an empty shopping cart.
           """
           self.items = []
+          self.sales_tax = sales_tax
 
      def add_item(self, item: Product, quantity: int = 1) -> None:
           """
@@ -48,14 +49,14 @@ class ShoppingCart:
           """
           self.items = [cart_item for cart_item in self.items if cart_item['id'] != item.id]
 
-     def get_total_sum(self) -> int:
+     def get_total_sum(self) -> float:
           """
-          Calculate the total sum of the cart.
+          Calculate the total sum of the cart, including sales tax.
 
           Returns:
-               int: The total price of all items in the cart.
+               float: The total price of all items in the cart including sales tax.
           """
-          return sum(item['price'] * item['quantity'] for item in self.items)
+          return sum(item['price'] * item['quantity'] for item in self.items) + self.get_total_sales_tax()
 
      def get_items(self) -> list:
           """
@@ -65,6 +66,18 @@ class ShoppingCart:
                list: A list of dictionaries representing cart items.
           """
           return self.items
+
+     def get_total_sales_tax(self) -> float:
+          """
+          Calculate the total sales tax of the cart.
+
+          Returns:
+               float: The total sales tax of the cart.
+          """
+          for item in self.items:
+               tax_amount = round_value(item['price'] *item['quantity'] *(self.sales_tax / 100))
+               item['tax_amount'] = tax_amount
+          return sum(item['tax_amount'] for item in self.items)
 
      def get_count(self) -> int:
           """
@@ -93,6 +106,9 @@ class ShoppingCart:
                None
           """
           print(f"Cart count: {self.get_count()} total items")
-          print(f"Cart total: {round_value(self.get_total_sum())}")
+          print(f"Total Sales tax: {self.get_total_sales_tax()}")
           self.view_cart_items()
+          print(f"Cart total: {self.get_total_sum()}")
+          
+          
 
