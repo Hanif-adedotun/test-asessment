@@ -19,6 +19,10 @@ class ShoppingCart:
           Returns:
                None
           """
+          # If quantity is zero or negative it does not add item to cart
+          if(quantity < 1):
+               return
+          
           # Check if product already exists in the cart, if so, just update the quantity
           for cart_item in self.items:
                if cart_item['id'] == item.id:
