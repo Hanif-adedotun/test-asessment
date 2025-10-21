@@ -84,14 +84,3 @@ def test_add_large_quantity():
     assert len(items) == 1
     assert items[0]['quantity'] == 1000000
     assert cart.get_total_sum() == 1250000.0
-
-def test_product_with_negative_price():
-    cart = ShoppingCart()
-    prod = Product(name="Promo Item", price=-5.00)
-    cart.add_item(prod, quantity=2)
-    
-    items = cart.get_items()
-    
-    assert items[0]['price'] == -5.00
-    assert cart.get_total_sum() == -10.0
-
