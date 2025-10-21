@@ -83,7 +83,7 @@ def test_add_large_quantity():
     
     assert len(items) == 1
     assert items[0]['quantity'] == 1000000
-    assert cart.get_total_sum() == 1250.0
+    assert cart.get_total_sum() == 1250000.0
 
 def test_product_with_negative_price():
     cart = ShoppingCart()
