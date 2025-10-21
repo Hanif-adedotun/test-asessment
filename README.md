@@ -6,6 +6,9 @@
 
 This is a simple assessment project for a Shopping Cart application.
 
+> **Note:**  
+> This code was developed using **Python 3.13**.
+
 More Details: [https://contingenton.github.io/tech-interview/shopping-cart-problem.html](https://contingenton.github.io/tech-interview/shopping-cart-problem.html)
 
 ## How to Run
